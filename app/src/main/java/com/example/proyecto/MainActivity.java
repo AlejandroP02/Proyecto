@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         viewModel = new ViewModelProvider(this).get(ViewModel.class);
         try {
-            String base64QR = viewModel.generarQR("https://www.ejemplo.com");
+            String textoPlano = "Hola, este es un código QR de ejemplo";
+            String base64QR = viewModel.generarQR(textoPlano);
             byte[] qrBytes = Base64.decodeBase64(base64QR);
             FirebaseStorage.getInstance().getReference("XD.jpg").putBytes(qrBytes);
         } catch (WriterException e) {

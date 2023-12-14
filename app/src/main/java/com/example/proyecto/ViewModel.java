@@ -36,7 +36,6 @@ public class ViewModel extends AndroidViewModel {
     }
 
     public String generarQR(String data) throws WriterException {
-        data = "https://www.ejemplo.com";
         int width = 300;
         int height = 300;
 
@@ -54,6 +53,8 @@ public class ViewModel extends AndroidViewModel {
             }
         }
 
+        // Convierte el Bitmap a bytes en formato PNG
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
 
         // Convierte los bytes a una cadena base64
         byte[] byteArray = outputStream.toByteArray();
