@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@android:drawable/ic_menu_directions"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/llavesFragment"
+        android:icon="@android:drawable/ic_menu_directions"
+        android:title="Llaves" />
+
+    <item
+        android:id="@+id/anyadirFragment"
+        android:icon="@android:drawable/ic_menu_directions"
+        android:title="Añadir llaves" />
+</menu>
