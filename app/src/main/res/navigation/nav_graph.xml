@@ -20,4 +20,9 @@
         android:name="com.example.proyecto.AnyadirFragment"
         android:label="fragment_anyadir"
         tools:layout="@layout/fragment_anyadir" />
+    <fragment
+        android:id="@+id/mostrarLlaveFragment"
+        android:name="com.example.proyecto.MostrarLlaveFragment"
+        android:label="fragment_mostrar_llave"
+        tools:layout="@layout/fragment_mostrar_llave" />
 </navigation>

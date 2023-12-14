@@ -3,7 +3,6 @@ package com.example.proyecto;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -13,26 +12,30 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeReader;
-import com.google.zxing.qrcode.QRCodeWriter;
-import com.google.zxing.qrcode.encoder.QRCode;
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
+
+import java.util.List;
+
 
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import uk.org.okapibarcode.backend.QrCode;
 
 
 public class ViewModel extends AndroidViewModel {
 
     public ViewModel(@NonNull Application application) {
         super(application);
+        llavesRepositorio = new LlavesRepositorio();
+
+        listElementosMutableLiveData.setValue(llavesRepositorio.obtener());
     }
 
     public String generarQR(String data) throws WriterException {
@@ -61,5 +64,41 @@ public class ViewModel extends AndroidViewModel {
         String base64String = Base64.encodeBase64String(byteArray);
 
         return base64String;
+    }
+    LlavesRepositorio llavesRepositorio;
+
+    MutableLiveData<List<Llave>> listElementosMutableLiveData = new MutableLiveData<>();
+
+
+
+    MutableLiveData<List<Llave>> obtener(){
+        return listElementosMutableLiveData;
+    }
+
+    void insertar(Llave llave){
+        llavesRepositorio.insertar(llave, new LlavesRepositorio.Callback() {
+            @Override
+            public void cuandoFinalice(List<Llave> llaves) {
+                listElementosMutableLiveData.setValue(llaves);
+            }
+        });
+    }
+
+    void eliminar(Llave llave){
+        llavesRepositorio.eliminar(llave, new LlavesRepositorio.Callback() {
+            @Override
+            public void cuandoFinalice(List<Llave> llaves) {
+                listElementosMutableLiveData.setValue(llaves);
+            }
+        });
+    }
+
+    void actualizar(Llave llave){
+        llavesRepositorio.actualizar(llave, new LlavesRepositorio.Callback() {
+            @Override
+            public void cuandoFinalice(List<Llave> llaves) {
+                listElementosMutableLiveData.setValue(llaves);
+            }
+        });
     }
 }

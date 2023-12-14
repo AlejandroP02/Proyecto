@@ -16,6 +16,8 @@ import com.google.zxing.WriterException;
 
 import org.apache.commons.codec.binary.Base64;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
             String base64QR = viewModel.generarQR(textoPlano);
             byte[] qrBytes = Base64.decodeBase64(base64QR);
             FirebaseStorage.getInstance().getReference("XD.jpg").putBytes(qrBytes);
+            FirebaseStorage.getInstance().getReference("XD.jpg");
+            FirebaseStorage.getInstance().getReference("XD.jpg").getFile(new File("gs://proyectoandroid-8171f.appspot.com/XD.jpg"));
         } catch (WriterException e) {
             throw new RuntimeException(e);
         }
