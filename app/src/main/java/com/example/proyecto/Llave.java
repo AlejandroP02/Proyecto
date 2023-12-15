@@ -1,5 +1,6 @@
 package com.example.proyecto;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -9,12 +10,14 @@ public class Llave {
     int id;
     String aula;
     int num;
-    String qr;
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    public byte[] qr;
 
 
-    public Llave(String aula, int num) {
+    public Llave(String aula, int num, byte[] qr) {
         this.aula = aula;
         this.num = num;
+        this.qr= qr;
     }
 
 }

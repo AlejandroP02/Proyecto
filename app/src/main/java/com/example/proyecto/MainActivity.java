@@ -40,16 +40,6 @@ public class MainActivity extends AppCompatActivity {
                 .setOpenableLayout(binding.drawerLayout)
                 .build();
         viewModel = new ViewModelProvider(this).get(ViewModel.class);
-        try {
-            String textoPlano = "Hola, este es un código QR de ejemplo";
-            String base64QR = viewModel.generarQR(textoPlano);
-            byte[] qrBytes = Base64.decodeBase64(base64QR);
-            FirebaseStorage.getInstance().getReference("XD.jpg").putBytes(qrBytes);
-            FirebaseStorage.getInstance().getReference("XD.jpg");
-            FirebaseStorage.getInstance().getReference("XD.jpg").getFile(new File("gs://proyectoandroid-8171f.appspot.com/XD.jpg"));
-        } catch (WriterException e) {
-            throw new RuntimeException(e);
-        }
 
 
 

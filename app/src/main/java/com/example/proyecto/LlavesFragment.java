@@ -43,10 +43,10 @@ public class LlavesFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
         navController = Navigation.findNavController(view);
 
-        binding.irANuevoElemento.setOnClickListener(new View.OnClickListener() {
+        binding.irANuevaLlave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_recyclerElementosFragment_to_nuevoElementoFragment);
+                navController.navigate(R.id.anyadirFragment);
             }
         });
         LlavesAdapter llavesAdapter = new LlavesAdapter();
@@ -102,13 +102,13 @@ public class LlavesFragment extends Fragment {
             Llave llave = llaves.get(position);
 
             holder.binding.aula.setText(llave.aula);
-            holder.binding.qr.setImageURI(Uri.parse(llave.qr));
+//            holder.binding.qr.setImageURI(Uri.parse(llave.qr));
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     viewModel.seleccionar(llave);
-                    navController.navigate(R.id.action_recyclerElementosFragment_to_mostrarElementoFragment);
+                    navController.navigate(R.id.mostrarLlaveFragment);
                 }
             });
         }

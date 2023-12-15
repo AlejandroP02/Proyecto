@@ -12,10 +12,12 @@ public class LlavesRepositorio {
     }
 
     LlavesRepositorio(){
-        llaves.add(new Llave("A0", 100));
+        /*llaves.add(new Llave("A0", 100));
         llaves.add(new Llave("A1", 101));
         llaves.add(new Llave("A2", 102));
         llaves.add(new Llave("A3", 103));
+
+         */
     }
 
     List<Llave> obtener() {
