@@ -36,11 +36,11 @@
         android:textColor="@color/secondary"
         android:text="CREAR"/>
     <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:id="@+id/carga"
+        android:layout_width="100dp"
         android:visibility="invisible"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
         android:indeterminate="true"
         android:layout_gravity="center" />
 </LinearLayout>

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,13 +52,19 @@ public class AnyadirFragment extends Fragment {
                     viewModel.insertar(new Llave(aula, num, qr));
                     binding.mostrarQr.setImageBitmap(BitmapFactory.decodeByteArray(qr, 0, qr.length));
                     boton.setVisibility(View.INVISIBLE);
-                    binding.progressBar.setVisibility(View.VISIBLE);
+                    binding.carga.setVisibility(View.VISIBLE);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            navController.popBackStack();
+                        }
+                    }, 1500); // 3 segundos de retraso
                 } catch (WriterException e) {
                     throw new RuntimeException(e);
                 }
 
 
-                navController.popBackStack();
             }
         });
     }
