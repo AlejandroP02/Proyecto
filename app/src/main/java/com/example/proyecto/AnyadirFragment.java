@@ -43,25 +43,41 @@ public class AnyadirFragment extends Fragment {
         binding.crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String aula = binding.aula.getText().toString();
-                int num = Integer.parseInt(binding.numero.getText().toString());
-                byte[] qr= new byte[0];
+                boolean datosCorrectos=true;
+                String aula = null;
+                int num=0;
+                aula = binding.aula.getText().toString();
                 try {
-                    qr = viewModel.generarQR(aula+":"+num);
-                    FirebaseStorage.getInstance().getReference(aula+".jpg").putBytes(qr);
-                    viewModel.insertar(new Llave(aula, num, qr));
-                    binding.mostrarQr.setImageBitmap(BitmapFactory.decodeByteArray(qr, 0, qr.length));
-                    boton.setVisibility(View.INVISIBLE);
-                    binding.carga.setVisibility(View.VISIBLE);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
+                    num = Integer.parseInt(binding.numero.getText().toString());
+                }catch (NumberFormatException e){
+                    if(num<=0){
+                        binding.numero.setError("Escribe un numero valido");
+                        datosCorrectos=false;
+                    }
+                }
+                byte[] qr= new byte[0];
+                if(aula==null || aula.isEmpty()){
+                    binding.aula.setError("Escribe un aula");
+                    datosCorrectos=false;
+                }
+                if (datosCorrectos){
+                    try {
+                        qr = viewModel.generarQR(aula+":"+num);
+                        FirebaseStorage.getInstance().getReference(aula+".jpg").putBytes(qr);
+                        viewModel.insertar(new Llave(aula, num, qr));
+                        binding.mostrarQr.setImageBitmap(BitmapFactory.decodeByteArray(qr, 0, qr.length));
+                        boton.setVisibility(View.INVISIBLE);
+                        binding.carga.setVisibility(View.VISIBLE);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
 
-                            navController.popBackStack();
-                        }
-                    }, 1500); // 3 segundos de retraso
-                } catch (WriterException e) {
-                    throw new RuntimeException(e);
+                                navController.popBackStack();
+                            }
+                        }, 1500); // 3 segundos de retraso
+                    } catch (WriterException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
 
 

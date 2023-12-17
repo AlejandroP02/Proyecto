@@ -46,9 +46,5 @@ public abstract class BaseDeDatos extends RoomDatabase {
         @Query("SELECT * FROM Llave ORDER BY aula DESC")
         LiveData<List<Llave>> aulaOrder();
 
-        @Query("SELECT COUNT(*) FROM Llave WHERE aula = :text")
-        int contarLlavesConAula(String text);
-        @Query("SELECT COUNT(*) FROM Llave WHERE aula = :num")
-        int contarLlavesConNum(int num);
     }
 }

@@ -1,10 +1,13 @@
 package com.example.proyecto;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.google.zxing.BarcodeFormat;
@@ -33,7 +36,6 @@ public class ViewModel extends AndroidViewModel {
         super(application);
         llavesRepositorio = new LlavesRepositorio(application);
 
-
     }
 
     public byte[] generarQR(String data) throws WriterException {
@@ -61,6 +63,7 @@ public class ViewModel extends AndroidViewModel {
         byte[] byteArray = outputStream.toByteArray();
         return byteArray;
     }
+
     LlavesRepositorio llavesRepositorio;
 
     MutableLiveData<Llave> llaveSeleccionada = new MutableLiveData<>();
@@ -92,7 +95,4 @@ public class ViewModel extends AndroidViewModel {
         return llavesRepositorio.aulaOrder();
     }
 
-    void establecerTerminoBusqueda(String t){
-        terminoBusqueda.setValue(t);
-    }
 }
