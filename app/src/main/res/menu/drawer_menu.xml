@@ -11,7 +11,7 @@
         android:title="Llaves" />
 
     <item
-        android:id="@+id/anyadirFragment"
+        android:id="@+id/recyclerNombreFragment"
         android:icon="@android:drawable/ic_menu_directions"
-        android:title="Añadir llaves" />
+        android:title="Ordenar llaves" />
 </menu>

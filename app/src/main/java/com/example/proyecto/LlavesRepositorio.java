@@ -1,40 +1,47 @@
 package com.example.proyecto;
 
-import java.util.ArrayList;
+import android.app.*;
+
+import androidx.lifecycle.LiveData;
+
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class LlavesRepositorio {
+    Executor executor = Executors.newSingleThreadExecutor();
 
-    List<Llave> llaves = new ArrayList<>();
 
-    interface Callback {
-        void cuandoFinalice(List<Llave> elementos);
+    BaseDeDatos.LlavesDao llavesDao;
+    LlavesRepositorio(Application application){
+        llavesDao = BaseDeDatos.obtenerInstancia(application).obtenerLlavesDao();
     }
 
-    LlavesRepositorio(){
-        /*llaves.add(new Llave("A0", 100));
-        llaves.add(new Llave("A1", 101));
-        llaves.add(new Llave("A2", 102));
-        llaves.add(new Llave("A3", 103));
 
-         */
+    LiveData<List<Llave>> obtener(){
+        return llavesDao.obtener();
     }
 
-    List<Llave> obtener() {
-        return llaves;
+    void insertar(Llave llave){
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                llavesDao.insertar(llave);
+            }
+        });
     }
 
-    void insertar(Llave llave, Callback callback){
-        llaves.add(llave);
-        callback.cuandoFinalice(llaves);
+    void eliminar(Llave llave) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                llavesDao.eliminar(llave);
+            }
+        });
     }
 
-    void eliminar(Llave llave, Callback callback) {
-        llaves.remove(llave);
-        callback.cuandoFinalice(llaves);
+    LiveData<List<Llave>> aulaOrder() {
+        return llavesDao.aulaOrder();
     }
 
-    void actualizar(Llave llave, Callback callback) {
-        callback.cuandoFinalice(llaves);
-    }
 }

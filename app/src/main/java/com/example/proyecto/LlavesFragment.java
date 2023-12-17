@@ -1,6 +1,6 @@
 package com.example.proyecto;
 
-import android.net.Uri;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RatingBar;
+
+import androidx.lifecycle.LiveData;
 
 import com.example.proyecto.databinding.FragmentLlavesBinding;
 import com.example.proyecto.databinding.ViewholderLlaveBinding;
@@ -26,7 +27,7 @@ import java.util.List;
 public class LlavesFragment extends Fragment {
 
     private FragmentLlavesBinding binding;
-    private ViewModel viewModel;
+    protected ViewModel viewModel;
     private NavController navController;
 
     @Override
@@ -34,6 +35,7 @@ public class LlavesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return (binding = FragmentLlavesBinding.inflate(inflater, container, false)).getRoot();
+
     }
 
     @Override
@@ -52,7 +54,8 @@ public class LlavesFragment extends Fragment {
         LlavesAdapter llavesAdapter = new LlavesAdapter();
         binding.recyclerView.setAdapter(llavesAdapter);
 
-        viewModel.obtener().observe(getViewLifecycleOwner(), new Observer<List<Llave>>() {
+        obtenerLlaves().observe(getViewLifecycleOwner(), new Observer<List<Llave>>() {
+
             @Override
             public void onChanged(List<Llave> llaves) {
                 llavesAdapter.establecerLista(llaves);
@@ -76,6 +79,9 @@ public class LlavesFragment extends Fragment {
 
             }
         }).attachToRecyclerView(binding.recyclerView);
+    }
+    LiveData<List<Llave>> obtenerLlaves(){
+        return viewModel.obtener();
     }
     class LlaveViewHolder extends RecyclerView.ViewHolder {
         private final ViewholderLlaveBinding binding;
@@ -102,7 +108,6 @@ public class LlavesFragment extends Fragment {
             Llave llave = llaves.get(position);
 
             holder.binding.aula.setText(llave.aula);
-//            holder.binding.qr.setImageURI(Uri.parse(llave.qr));
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -126,4 +131,5 @@ public class LlavesFragment extends Fragment {
             return llaves.get(posicion);
         }
     }
+
 }

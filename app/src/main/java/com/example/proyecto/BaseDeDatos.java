@@ -26,11 +26,11 @@ public abstract class BaseDeDatos extends RoomDatabase {
     }
 
 
-    //public abstract LlavesDao obtenerLlavesDao();
+    public abstract LlavesDao obtenerLlavesDao();
 
 
     @Dao
-    interface LavessDao {
+    interface LlavesDao {
         @Query("SELECT * FROM Llave")
         LiveData<List<Llave>> obtener();
 
@@ -42,5 +42,13 @@ public abstract class BaseDeDatos extends RoomDatabase {
 
         @Delete
         void eliminar(Llave llave);
+
+        @Query("SELECT * FROM Llave ORDER BY aula DESC")
+        LiveData<List<Llave>> aulaOrder();
+
+        @Query("SELECT COUNT(*) FROM Llave WHERE aula = :text")
+        int contarLlavesConAula(String text);
+        @Query("SELECT COUNT(*) FROM Llave WHERE aula = :num")
+        int contarLlavesConNum(int num);
     }
 }

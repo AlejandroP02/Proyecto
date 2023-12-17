@@ -1,10 +1,8 @@
 package com.example.proyecto;
 
 import android.app.Application;
-import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -15,26 +13,27 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import java.util.List;
 
-
-import org.apache.commons.codec.binary.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import kotlin.jvm.functions.Function1;
 
 
 public class ViewModel extends AndroidViewModel {
 
     public ViewModel(@NonNull Application application) {
         super(application);
-        llavesRepositorio = new LlavesRepositorio();
+        llavesRepositorio = new LlavesRepositorio(application);
 
-        listLlavesMutableLiveData.setValue(llavesRepositorio.obtener());
+
     }
 
     public byte[] generarQR(String data) throws WriterException {
@@ -62,22 +61,8 @@ public class ViewModel extends AndroidViewModel {
         byte[] byteArray = outputStream.toByteArray();
         return byteArray;
     }
-    private void showLoadingIcon(long durationMillis) {
-        final ProgressDialog progressDialog = new ProgressDialog(this.getApplication());
-        progressDialog.setMessage("Cargando...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressDialog.dismiss();
-            }
-        }, durationMillis);
-    }
     LlavesRepositorio llavesRepositorio;
 
-    MutableLiveData<List<Llave>> listLlavesMutableLiveData = new MutableLiveData<>();
     MutableLiveData<Llave> llaveSeleccionada = new MutableLiveData<>();
 
     void seleccionar(Llave llave){
@@ -88,35 +73,26 @@ public class ViewModel extends AndroidViewModel {
         return llaveSeleccionada;
     }
 
+    MutableLiveData<String> terminoBusqueda = new MutableLiveData<>();
 
-    MutableLiveData<List<Llave>> obtener(){
-        return listLlavesMutableLiveData;
+
+    LiveData<List<Llave>> obtener(){
+        return llavesRepositorio.obtener();
     }
 
     void insertar(Llave llave){
-        llavesRepositorio.insertar(llave, new LlavesRepositorio.Callback() {
-            @Override
-            public void cuandoFinalice(List<Llave> llaves) {
-                listLlavesMutableLiveData.setValue(llaves);
-            }
-        });
+        llavesRepositorio.insertar(llave);
     }
 
     void eliminar(Llave llave){
-        llavesRepositorio.eliminar(llave, new LlavesRepositorio.Callback() {
-            @Override
-            public void cuandoFinalice(List<Llave> llaves) {
-                listLlavesMutableLiveData.setValue(llaves);
-            }
-        });
+        llavesRepositorio.eliminar(llave);
     }
 
-    void actualizar(Llave llave){
-        llavesRepositorio.actualizar(llave, new LlavesRepositorio.Callback() {
-            @Override
-            public void cuandoFinalice(List<Llave> llaves) {
-                listLlavesMutableLiveData.setValue(llaves);
-            }
-        });
+    LiveData<List<Llave>> aulaOrder(){
+        return llavesRepositorio.aulaOrder();
+    }
+
+    void establecerTerminoBusqueda(String t){
+        terminoBusqueda.setValue(t);
     }
 }

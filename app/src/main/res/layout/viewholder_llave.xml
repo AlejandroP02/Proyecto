@@ -2,15 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
+    <ImageView
+        android:id="@+id/llave"
+        android:layout_width="120px"
+        android:layout_height="match_parent"
+        android:src="@drawable/logo"/>
     <TextView
         android:id="@+id/aula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="32sp" />
-    <ImageView
-        android:id="@+id/qr"
-        android:layout_width="100px"
-        android:layout_height="100px"/>
+        android:textSize="32sp"
+        android:textAlignment="center"/>
 </LinearLayout>
